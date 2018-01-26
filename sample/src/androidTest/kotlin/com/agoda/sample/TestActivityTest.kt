@@ -1,7 +1,13 @@
 package com.agoda.sample
 
+import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.action.ViewActions.pressImeActionButton
+import android.support.test.espresso.action.ViewActions.typeText
+import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
+import android.widget.EditText
 import com.agoda.sample.screen.TestActivityScreen
 import org.junit.Rule
 import org.junit.Test
@@ -14,6 +20,21 @@ class TestActivityTest {
     val rule = ActivityTestRule(TestActivity::class.java)
 
     val screen = TestActivityScreen()
+
+    @Test
+    fun failingTestWithKakao() {
+        screen {
+            editText {
+                typeText("Test input")
+                pressImeAction()
+            }
+        }
+    }
+
+    @Test
+    fun succeedingTestWithEspresso() {
+        onView(withId(R.id.edit_text)).perform(typeText("No such item"), pressImeActionButton())
+    }
 
     @Test
     fun testContentScreen() {
